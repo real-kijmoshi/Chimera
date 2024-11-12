@@ -1,101 +1,204 @@
-import Image from "next/image";
+"use client";
+import { useState, useEffect } from "react";
+import { ArrowRight, MessageCircle, Users, Sparkles, Menu, X } from "lucide-react";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [scrollY, setScrollY] = useState(0);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return (
+    <div className="bg-[#0A0A0B] text-white overflow-x-hidden">
+      {/* Navigation */}
+      <nav className={`fixed w-full z-50 transition-all duration-300 ${
+        scrollY > 50 ? "bg-black/80 backdrop-blur-lg" : ""
+      }`}>
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex items-center justify-between h-20">
+            <div className="text-2xl font-bold bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">
+              Chimera
+            </div>
+
+            <div className="hidden md:flex items-center space-x-8">
+              <a href="#features" className="hover:text-purple-400 transition-colors">Features</a>
+              <a href="#community" className="hover:text-purple-400 transition-colors">Community</a>
+              <a href="#safety" className="hover:text-purple-400 transition-colors">Safety</a>
+              <button className="bg-purple-600 hover:bg-purple-700 px-6 py-2.5 rounded-lg transition-all transform hover:scale-105">
+                Open App
+              </button>
+            </div>
+
+            <button 
+              className="md:hidden text-2xl"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              {isMenuOpen ? <X /> : <Menu />}
+            </button>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        {/* Mobile menu */}
+        {isMenuOpen && (
+          <div className="md:hidden bg-black/95 backdrop-blur-lg border-t border-white/10 p-4">
+            <div className="flex flex-col space-y-4">
+              <a href="#features" className="hover:text-purple-400 transition-colors">Features</a>
+              <a href="#community" className="hover:text-purple-400 transition-colors">Community</a>
+              <a href="#safety" className="hover:text-purple-400 transition-colors">Safety</a>
+              <button className="bg-purple-600 hover:bg-purple-700 px-6 py-2.5 rounded-lg transition-all">
+                Open App
+              </button>
+            </div>
+          </div>
+        )}
+      </nav>
+
+      {/* Snap Scroll Container */}
+      <div className="snap-y snap-mandatory h-screen overflow-y-auto">
+        {/* Hero Section */}
+        <section className="snap-start min-h-screen flex items-center relative bg-gradient-to-b from-[#0A0A0B] to-[#13151A]">
+          <div className="absolute inset-0 overflow-hidden">
+            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600/20 rounded-full filter blur-3xl animate-pulse" />
+            <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-600/20 rounded-full filter blur-3xl animate-pulse delay-1000" />
+          </div>
+
+          <div className="max-w-7xl mx-auto px-6 pt-20 relative">
+            <div className="flex flex-col items-center text-center">
+              <h1 className="text-5xl md:text-7xl font-bold mb-8 bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">
+                Connect. Create. Conquer.
+              </h1>
+              <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mb-12">
+                Where communities thrive and conversations come alive. Join millions building 
+                the future of digital connection.
+              </p>
+              <button className="group bg-gradient-to-r from-purple-600 to-indigo-600 px-8 py-4 rounded-lg font-medium text-lg transition-all transform hover:scale-105 hover:shadow-lg hover:shadow-purple-500/25 flex items-center">
+                Get Started
+                <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+              </button>
+            </div>
+          </div>
+        </section>
+
+        {/* Features Section */}
+        <section id="features" className="snap-start min-h-screen flex items-center bg-[#13151A]">
+          <div className="max-w-7xl mx-auto px-6 py-20">
+            <div className="grid md:grid-cols-3 gap-8">
+              {[
+                {
+                  icon: <MessageCircle className="w-8 h-8" />,
+                  title: "Real-time Chat",
+                  description: "Experience lightning-fast messaging with crystal-clear voice and video."
+                },
+                {
+                  icon: <Users className="w-8 h-8" />,
+                  title: "Community First",
+                  description: "Build and grow your community with powerful moderation tools."
+                },
+                {
+                  icon: <Sparkles className="w-8 h-8" />,
+                  title: "Custom Experience",
+                  description: "Personalize your space with custom themes, roles, and integrations."
+                }
+              ].map((feature, index) => (
+                <div
+                  key={index}
+                  className="group bg-gradient-to-b from-purple-900/20 to-indigo-900/20 p-8 rounded-2xl border border-white/10 hover:border-purple-500/50 transition-all transform hover:scale-105"
+                >
+                  <div className="bg-gradient-to-r from-purple-500 to-indigo-500 w-16 h-16 rounded-lg flex items-center justify-center mb-6">
+                    {feature.icon}
+                  </div>
+                  <h3 className="text-2xl font-bold mb-4">{feature.title}</h3>
+                  <p className="text-gray-400">{feature.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Community Section */}
+        <section id="community" className="snap-start min-h-screen flex items-center bg-gradient-to-b from-[#13151A] to-[#0A0A0B]">
+          <div className="max-w-7xl mx-auto px-6 py-20">
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              <div className="order-2 md:order-1">
+                <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">
+                  Join a thriving community
+                </h2>
+                <p className="text-xl text-gray-400 mb-8">
+                  Discover servers filled with people who share your interests. From gaming to art, 
+                  music to education - there&apos;s a place for everyone.
+                </p>
+                <div className="flex flex-wrap gap-4">
+                  {["Gaming", "Art", "Music", "Tech", "Education", "Sports"].map((tag, index) => (
+                    <span
+                      key={index}
+                      className="bg-purple-900/30 border border-purple-500/30 px-4 py-2 rounded-lg text-purple-400"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div className="order-1 md:order-2">
+                <div className="relative group">
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-2xl blur-2xl opacity-50 group-hover:opacity-75 transition-opacity" />
+                  <div className="relative bg-[#1A1B1F] border border-white/10 rounded-2xl p-6">
+                    {/* Mock community interface */}
+                    <div className="space-y-4">
+                      {[1, 2, 3].map((item) => (
+                        <div key={item} className="flex items-center space-x-4">
+                          <div className="w-10 h-10 rounded-full bg-gradient-to-r from-purple-500 to-indigo-500" />
+                          <div className="flex-1">
+                            <div className="h-4 w-24 bg-white/10 rounded" />
+                            <div className="h-3 w-32 bg-white/5 rounded mt-2" />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Safety Section */}
+        <section id="safety" className="snap-start min-h-screen flex items-center bg-[#0A0A0B]">
+          <div className="max-w-7xl mx-auto px-6 py-20">
+            <div className="text-center max-w-4xl mx-auto">
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">
+                Security at its core
+              </h2>
+              <p className="text-xl text-gray-400 mb-12">
+                Built with privacy and security in mind. Advanced encryption, customizable privacy settings, 
+                and powerful moderation tools keep your conversations safe.
+              </p>
+              <button className="bg-gradient-to-r from-purple-600 to-indigo-600 px-8 py-4 rounded-lg font-medium text-lg transition-all transform hover:scale-105 hover:shadow-lg hover:shadow-purple-500/25">
+                Learn More About Safety
+              </button>
+            </div>
+          </div>
+        </section>
+
+        {/* Final CTA Section */}
+        <section className="snap-start min-h-screen flex items-center bg-gradient-to-b from-[#0A0A0B] to-[#13151A]">
+          <div className="max-w-7xl mx-auto px-6 py-20 text-center">
+            <h2 className="text-4xl md:text-6xl font-bold mb-8 bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">
+              Ready to get started?
+            </h2>
+            <p className="text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
+              Join millions (more like tens) of others in shaping the future of digital communities.
+            </p>
+            <button className="group bg-gradient-to-r from-purple-600 to-indigo-600 px-12 py-6 rounded-lg font-medium text-xl transition-all transform hover:scale-105 hover:shadow-lg hover:shadow-purple-500/25 flex items-center mx-auto">
+              Create Your Space
+              <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+            </button>
+          </div>
+        </section>
+      </div>
     </div>
   );
 }
