@@ -1,6 +1,8 @@
 "use client";
-import { useState, useEffect } from "react";
-import { ArrowRight, MessageCircle, Users, Sparkles, Menu, X } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { ArrowRight, MessageCircle, Users, Sparkles, Menu, X, ArrowDown } from "lucide-react";
+import { motion } from "framer-motion";
+
 
 export default function Home() {
   const [scrollY, setScrollY] = useState(0);
@@ -12,12 +14,24 @@ export default function Home() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const scroll = () => {
+    const snapElements = document.querySelectorAll(".snap-start");
+    const snapIndex = Math.min(snapElements.length - 1, Math.floor(scrollY / window.innerHeight) + 1);
+    const nextSnap = snapElements[snapIndex];
+    console.log(nextSnap);
+    nextSnap.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <div className="bg-[#0A0A0B] text-white overflow-x-hidden">
       {/* Navigation */}
-      <nav className={`fixed w-full z-50 transition-all duration-300 ${
+      <motion.nav className={`fixed w-full z-50  ${
         scrollY > 50 ? "bg-black/80 backdrop-blur-lg" : ""
-      }`}>
+      }`}
+      initial={{ y: -10, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 1.5 }}
+      >
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex items-center justify-between h-20">
             <div className="text-2xl font-bold bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">
@@ -55,7 +69,7 @@ export default function Home() {
             </div>
           </div>
         )}
-      </nav>
+      </motion.nav>
 
       {/* Snap Scroll Container */}
       <div className="snap-y snap-mandatory h-screen overflow-y-auto">
@@ -81,6 +95,13 @@ export default function Home() {
               </button>
             </div>
           </div>
+
+          <div 
+            className="absolute bottom-0 left-1/2 transform -translate-x-1/2 mb-8 bg-white p-2 rounded-full animate-bounce opacity-50 cursor-pointer"
+            onClick={scroll}
+          >
+            <ArrowDown className="w-8 h-8 mx-auto text-black" />
+          </div>
         </section>
 
         {/* Features Section */}
@@ -104,16 +125,23 @@ export default function Home() {
                   description: "Personalize your space with custom themes, roles, and integrations."
                 }
               ].map((feature, index) => (
-                <div
-                  key={index}
-                  className="group bg-gradient-to-b from-purple-900/20 to-indigo-900/20 p-8 rounded-2xl border border-white/10 hover:border-purple-500/50 transition-all transform hover:scale-105"
+                <motion.div
+                key={index}
+                className="group bg-gradient-to-b from-purple-900/20 to-indigo-900/20 p-8 rounded-2xl border border-white/10 hover:border-purple-500/50"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 1.5,
+                  ease: "easeOut",
+                  delay: index * 0.2 
+                }}
                 >
                   <div className="bg-gradient-to-r from-purple-500 to-indigo-500 w-16 h-16 rounded-lg flex items-center justify-center mb-6">
                     {feature.icon}
                   </div>
                   <h3 className="text-2xl font-bold mb-4">{feature.title}</h3>
                   <p className="text-gray-400">{feature.description}</p>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -124,21 +152,37 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-6 py-20">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div className="order-2 md:order-1">
-                <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">
+                <motion.h2 
+                  className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent"
+                  initial={{ opacity: 0, x: -200 }}
+                  whileInView={{ opacity: 1, x: -40 }}
+                  transition={{
+                    duration: 1.5,
+                    ease: "easeOut"
+                  }}
+                  >
+  
                   Join a thriving community
-                </h2>
+                </motion.h2>
                 <p className="text-xl text-gray-400 mb-8">
                   Discover servers filled with people who share your interests. From gaming to art, 
                   music to education - there&apos;s a place for everyone.
                 </p>
                 <div className="flex flex-wrap gap-4">
                   {["Gaming", "Art", "Music", "Tech", "Education", "Sports"].map((tag, index) => (
-                    <span
+                    <motion.span
                       key={index}
                       className="bg-purple-900/30 border border-purple-500/30 px-4 py-2 rounded-lg text-purple-400"
+                      initial={{ opacity: 0, x: 300 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{
+                        duration: 1.5,
+                        ease: "easeOut",
+                        delay: index * 0.2
+                      }}
                     >
                       {tag}
-                    </span>
+                    </motion.span>
                   ))}
                 </div>
               </div>
@@ -149,13 +193,23 @@ export default function Home() {
                     {/* Mock community interface */}
                     <div className="space-y-4">
                       {[1, 2, 3].map((item) => (
-                        <div key={item} className="flex items-center space-x-4">
+                        <motion.div 
+                          key={item} 
+                          className="flex items-center space-x-4"
+                          initial={{ opacity: 0, x: 100 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          transition={{
+                            duration: 1.5,
+                            ease: "easeOut",
+                            delay: item * 0.2
+                          }}
+                        >
                           <div className="w-10 h-10 rounded-full bg-gradient-to-r from-purple-500 to-indigo-500" />
                           <div className="flex-1">
                             <div className="h-4 w-24 bg-white/10 rounded" />
                             <div className="h-3 w-32 bg-white/5 rounded mt-2" />
                           </div>
-                        </div>
+                        </motion.div>
                       ))}
                     </div>
                   </div>
@@ -194,7 +248,17 @@ export default function Home() {
             </p>
             <button className="group bg-gradient-to-r from-purple-600 to-indigo-600 px-12 py-6 rounded-lg font-medium text-xl transition-all transform hover:scale-105 hover:shadow-lg hover:shadow-purple-500/25 flex items-center mx-auto">
               Create Your Space
-              <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+              <motion.span
+                initial={{ x: 0 }}
+                animate={{ x: 4 }}
+                transition={{
+                  duration: 0.5,
+                  repeat: Infinity,
+                  repeatType: "reverse"
+                }}
+                >
+                  <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+              </motion.span>
             </button>
           </div>
         </section>
