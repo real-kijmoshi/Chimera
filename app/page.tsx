@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import { ArrowRight, MessageCircle, Users, Sparkles, Menu, X, ArrowDown } from "lucide-react";
 import { motion } from "framer-motion";
 
-
 export default function Home() {
   const [scrollY, setScrollY] = useState(0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -25,12 +24,11 @@ export default function Home() {
   return (
     <div className="bg-[#0A0A0B] text-white overflow-x-hidden">
       {/* Navigation */}
-      <motion.nav className={`fixed w-full z-50  ${
-        scrollY > 50 ? "bg-black/80 backdrop-blur-lg" : ""
-      }`}
-      initial={{ y: -10, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 1.5 }}
+      <motion.nav
+        className={`fixed w-full z-50 ${scrollY > 50 ? "bg-black/80 backdrop-blur-lg" : ""}`}
+        initial={{ y: -10, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 1.5 }}
       >
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex items-center justify-between h-20">
@@ -39,15 +37,21 @@ export default function Home() {
             </div>
 
             <div className="hidden md:flex items-center space-x-8">
-              <a href="#features" className="hover:text-purple-400 transition-colors">Features</a>
-              <a href="#community" className="hover:text-purple-400 transition-colors">Community</a>
-              <a href="#safety" className="hover:text-purple-400 transition-colors">Safety</a>
+              <a href="#features" className="hover:text-purple-400 transition-colors">
+                Features
+              </a>
+              <a href="#community" className="hover:text-purple-400 transition-colors">
+                Community
+              </a>
+              <a href="#safety" className="hover:text-purple-400 transition-colors">
+                Safety
+              </a>
               <button className="bg-purple-600 hover:bg-purple-700 px-6 py-2.5 rounded-lg transition-all transform hover:scale-105">
                 Open App
               </button>
             </div>
 
-            <button 
+            <button
               className="md:hidden text-2xl"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
@@ -60,9 +64,15 @@ export default function Home() {
         {isMenuOpen && (
           <div className="md:hidden bg-black/95 backdrop-blur-lg border-t border-white/10 p-4">
             <div className="flex flex-col space-y-4">
-              <a href="#features" className="hover:text-purple-400 transition-colors">Features</a>
-              <a href="#community" className="hover:text-purple-400 transition-colors">Community</a>
-              <a href="#safety" className="hover:text-purple-400 transition-colors">Safety</a>
+              <a href="#features" className="hover:text-purple-400 transition-colors">
+                Features
+              </a>
+              <a href="#community" className="hover:text-purple-400 transition-colors">
+                Community
+              </a>
+              <a href="#safety" className="hover:text-purple-400 transition-colors">
+                Safety
+              </a>
               <button className="bg-purple-600 hover:bg-purple-700 px-6 py-2.5 rounded-lg transition-all">
                 Open App
               </button>
@@ -86,8 +96,7 @@ export default function Home() {
                 Connect. Create. Conquer.
               </h1>
               <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mb-12">
-                Where communities thrive and conversations come alive. Join millions building 
-                the future of digital connection.
+                Where communities thrive and conversations come alive. Join millions building the future of digital connection.
               </p>
               <button className="group bg-gradient-to-r from-purple-600 to-indigo-600 px-8 py-4 rounded-lg font-medium text-lg transition-all transform hover:scale-105 hover:shadow-lg hover:shadow-purple-500/25 flex items-center">
                 Get Started
@@ -96,11 +105,13 @@ export default function Home() {
             </div>
           </div>
 
-          <div 
-            className="absolute bottom-0 left-1/2 transform -translate-x-1/2 mb-8 bg-white p-2 rounded-full animate-bounce opacity-50 cursor-pointer"
+          <div
+            className="absolute bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer"
             onClick={scroll}
           >
-            <ArrowDown className="w-8 h-8 mx-auto text-black" />
+            <div className="bg-white opacity-40 w-12 h-12 rounded-full flex items-center justify-center animate-bounce">
+              <ArrowDown className="w-8 h-8 mx-auto text-black" />
+            </div>
           </div>
         </section>
 
@@ -126,15 +137,15 @@ export default function Home() {
                 }
               ].map((feature, index) => (
                 <motion.div
-                key={index}
-                className="group bg-gradient-to-b from-purple-900/20 to-indigo-900/20 p-8 rounded-2xl border border-white/10 hover:border-purple-500/50"
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 1.5,
-                  ease: "easeOut",
-                  delay: index * 0.2 
-                }}
+                  key={index}
+                  className="group bg-gradient-to-b from-purple-900/20 to-indigo-900/20 p-8 rounded-2xl border border-white/10 hover:border-purple-500/50"
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{
+                    duration: 1.5,
+                    ease: "easeOut",
+                    delay: index * 0.2
+                  }}
                 >
                   <div className="bg-gradient-to-r from-purple-500 to-indigo-500 w-16 h-16 rounded-lg flex items-center justify-center mb-6">
                     {feature.icon}
@@ -152,28 +163,26 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-6 py-20">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div className="order-2 md:order-1">
-                <motion.h2 
-                  className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent"
+                <motion.h2
+                  className="pl-12 md:pl-6 text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent"
                   initial={{ opacity: 0, x: -200 }}
                   whileInView={{ opacity: 1, x: -40 }}
                   transition={{
                     duration: 1.5,
                     ease: "easeOut"
                   }}
-                  >
-  
+                >
                   Join a thriving community
                 </motion.h2>
                 <p className="text-xl text-gray-400 mb-8">
-                  Discover servers filled with people who share your interests. From gaming to art, 
-                  music to education - there&apos;s a place for everyone.
+                  Discover servers filled with people who share your interests. From gaming to art, music to education - there&apos;s a place for everyone.
                 </p>
                 <div className="flex flex-wrap gap-4">
                   {["Gaming", "Art", "Music", "Tech", "Education", "Sports"].map((tag, index) => (
                     <motion.span
                       key={index}
                       className="bg-purple-900/30 border border-purple-500/30 px-4 py-2 rounded-lg text-purple-400"
-                      initial={{ opacity: 0, x: 300 }}
+                      initial={{ opacity: 0, x: index == 3 ? 110 : 200 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       transition={{
                         duration: 1.5,
@@ -193,8 +202,8 @@ export default function Home() {
                     {/* Mock community interface */}
                     <div className="space-y-4">
                       {[1, 2, 3].map((item) => (
-                        <motion.div 
-                          key={item} 
+                        <motion.div
+                          key={item}
                           className="flex items-center space-x-4"
                           initial={{ opacity: 0, x: 100 }}
                           whileInView={{ opacity: 1, x: 0 }}
@@ -227,8 +236,7 @@ export default function Home() {
                 Security at its core
               </h2>
               <p className="text-xl text-gray-400 mb-12">
-                Built with privacy and security in mind. Advanced encryption, customizable privacy settings, 
-                and powerful moderation tools keep your conversations safe.
+                Built with privacy and security in mind. Advanced encryption, customizable privacy settings, and powerful moderation tools keep your conversations safe.
               </p>
               <button className="bg-gradient-to-r from-purple-600 to-indigo-600 px-8 py-4 rounded-lg font-medium text-lg transition-all transform hover:scale-105 hover:shadow-lg hover:shadow-purple-500/25">
                 Learn More About Safety
@@ -256,8 +264,8 @@ export default function Home() {
                   repeat: Infinity,
                   repeatType: "reverse"
                 }}
-                >
-                  <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+              >
+                <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
               </motion.span>
             </button>
           </div>
